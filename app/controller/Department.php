@@ -5,7 +5,7 @@ use app\BaseController;
 use think\facade\Db;
 use think\facade\View;
 
-class Admin extends BaseController
+class Department extends BaseController
 {
     public function index()
     {
