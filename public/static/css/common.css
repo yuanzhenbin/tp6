@@ -1,0 +1,85 @@
+/*自定义样式*/
+.content{
+    background: #ffffff;
+    max-width: 1400px;
+    min-height: 522px;
+    margin: 30px 10%;
+    padding: 50px 0;
+}
+.top_row{
+    width: 100%;
+    min-height: 32px;
+    display: block;
+    margin-bottom: 10px;
+}
+.div_line{
+    width: 100%;
+    margin-bottom: 10px;
+}
+.div_left{
+    display: inline-block;
+    width: 80px;
+    line-height: 22px;
+    text-align: right;
+    vertical-align: middle;
+}
+.div_right{
+    display: inline-block;
+    width: 200px;
+    line-height: 22px;
+    vertical-align: middle;
+}
+.blue_button{
+    background: #0085ff;
+    color: #ffffff;
+    display: inline-block;
+    border: 1px solid #0085ff;
+    border-radius: 2px;
+    line-height: 28px;
+    text-align: center;
+    min-width: 80px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.orange_button{
+    background: #ff8600;
+    color: #ffffff;
+    display: inline-block;
+    border: 1px solid #ff8600;
+    border-radius: 2px;
+    line-height: 28px;
+    text-align: center;
+    min-width: 80px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.grey_button{
+    background: #ffffff;
+    color: #333333;
+    display: inline-block;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    line-height: 28px;
+    text-align: center;
+    min-width: 80px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+
+/*原生标签*/
+a {
+    color: #0085ff;
+}
+a:hover{
+    color: #ff8600;
+}
+body{
+    background: #f5f5f5;
+}
+
+
+/*layui*/
+.layui-table-page {
+    text-align: center;
+}
