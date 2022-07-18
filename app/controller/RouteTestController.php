@@ -5,7 +5,7 @@ use app\BaseController;
 use think\facade\Request;
 use think\facade\View;
 
-class RouteTest extends BaseController
+class RouteTestController extends BaseController
 {
     public function index()
     {

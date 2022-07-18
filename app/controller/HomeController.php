@@ -2,10 +2,9 @@
 namespace app\controller;
 
 use app\BaseController;
-use think\facade\Db;
 use think\facade\View;
 
-class Department extends BaseController
+class HomeController extends BaseController
 {
     public function index()
     {
