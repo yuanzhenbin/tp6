@@ -6,17 +6,22 @@ use think\facade\Request;
 use think\facade\Db;
 use think\facade\View;
 use app\model\User;
+use app\validate\UserValidate;
+use think\exception\ValidateException;
 
 class UserController extends BaseController
 {
     public function index()
     {
+        //$this->request->param() 等同于 Request::param() 因为BaseController里已经设置
+        //也可以使用助手函数 request()->param() 为了简化调用，系统还提供了request助手函数，可以在任何需要的时候直接调用当前请求对象
+
         $page = input('page',1);
         $limit = input('limit',10);
         $first_row = (($page - 1) * $limit);
         $r_method = Request::method();
         if ($r_method == 'GET') {
-            $data = Db::name('user')->where([['id','>',0]])->limit($first_row, $limit)->select()->toArray();
+            $data = Db::name('user')->where([['id','>',0]])->order('create_time desc')->limit($first_row, $limit)->select()->toArray();
             $sex_list = [0=>'未知', 1=>'男', 2=>'女'];
             $status_list = [0=>'未知', 1=>'正常', 2=>'删除'];
             foreach ($data as &$v) {
@@ -46,8 +51,9 @@ class UserController extends BaseController
     public function addUser()
     {
         $add_data = [];
-        $add_data['name'] = Request::param('name','');
-        $add_data['phone'] = Request::param('phone','');
+        $add_data['name'] = request()->param('name','');
+        $add_data['phone'] = request()->param('phone','');
+        $add_data['email'] = request()->param('email','');
         $add_data['sex'] = Request::param('sex',0);
         $add_data['status'] = Request::param('status',1);
         $add_data['create_time'] = time();
@@ -77,6 +83,7 @@ class UserController extends BaseController
         $id = Request::param('id');
         $name = Request::param('name','');
         $phone = Request::param('phone','');
+        $email = Request::param('email','');
         $sex = Request::param('sex',0);
         $status = Request::param('status',1);
         if(!$id) {
@@ -84,7 +91,7 @@ class UserController extends BaseController
         }
         $ret = Db::name('user')
             ->where('id',$id)
-            ->update(['name' => $name,'phone' => $phone,'sex' => $sex,'status' => $status]);
+            ->update(['name' => $name,'phone' => $phone,'email' => $email,'sex' => $sex,'status' => $status]);
 
         if ($ret !== false) {
             return_ajax([],200,'修改成功');
@@ -115,6 +122,26 @@ class UserController extends BaseController
             return_ajax($info);
         } else {
             return_ajax([],0);
+        }
+    }
+
+    public function admin()
+    {
+        //重定向
+        return redirect(url('Admin/index'));
+    }
+
+    //验证器测试
+    public function check()
+    {
+        $data = request()->param();
+//        var_dump($data);die;
+        try {
+            validate(UserValidate::class)->check($data);
+            return_ajax([],200,'验证通过');
+        } catch (ValidateException $e) {
+            // 验证失败 输出错误信息
+            return_ajax([],0,$e->getError());
         }
     }
 }

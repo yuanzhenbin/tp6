@@ -10,6 +10,7 @@ class User extends Model
         'id'          => 'int',
         'name'        => 'string',
         'phone'        => 'int',
+        'email'        => 'string',
         'status'      => 'tinyint',
         'sex'       => 'tinyint',
         'department_id' => 'int',
