@@ -4,7 +4,7 @@ namespace app\controller;
 use app\BaseController;
 use think\facade\Request;
 
-class ErrorController extends BaseController
+class Error1Controller extends BaseController
 {
     public function __call($fun_name, $param)
     {

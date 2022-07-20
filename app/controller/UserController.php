@@ -5,9 +5,10 @@ use app\BaseController;
 use think\facade\Request;
 use think\facade\Db;
 use think\facade\View;
+use think\exception\ValidateException;
 use app\model\User;
 use app\validate\UserValidate;
-use think\exception\ValidateException;
+use app\service\TestService;
 
 class UserController extends BaseController
 {
@@ -143,5 +144,12 @@ class UserController extends BaseController
             // 验证失败 输出错误信息
             return_ajax([],0,$e->getError());
         }
+    }
+
+    public function serviceTest()
+    {
+        $id = 1;
+        $data = TestService::test($id);
+        var_dump($data);
     }
 }

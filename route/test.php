@@ -39,4 +39,8 @@ Route::rule('routetest/id/:id', function ($id) {
 Route::get('routetest/name/:name', 'RouteTest/getName');
 Route::post('routetest/name', 'RouteTest/postName');
 
-
+//路由中间件
+Route::rule('middleware/:name',function () {
+    return '路由中间件测试';
+})
+    ->middleware([\app\middleware\Check::class,\app\middleware\Check2::class]);

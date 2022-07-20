@@ -7,4 +7,6 @@ return [
     // \think\middleware\LoadLangPack::class,
     // Session初始化
     // \think\middleware\SessionInit::class
+    //全局中间件测试
+//     \app\middleware\Check::class
 ];
