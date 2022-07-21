@@ -17,3 +17,12 @@ INSERT INTO `tp6`.`user` (`id`, `name`, `sex`, `phone`, `department_id`, `status
 INSERT INTO `tp6`.`user` (`id`, `name`, `sex`, `phone`, `department_id`, `status`, `create_time`, `update_time`) VALUES ('4', '王五', '2', '', '0', '1', '1658052731', '0');
 INSERT INTO `tp6`.`user` (`id`, `name`, `sex`, `phone`, `department_id`, `status`, `create_time`, `update_time`) VALUES ('5', 'del1', '1', '', '0', '0', '1658042731', '1658052731');
 INSERT INTO `tp6`.`user` (`id`, `name`, `sex`, `phone`, `department_id`, `status`, `create_time`, `update_time`) VALUES ('6', 'del2', '2', '', '0', '0', '0', '0');
+
+
+CREATE TABLE `log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '日志类型 0-系统报错 1-消息队列',
+  `content` varchar(1000) DEFAULT '' COMMENT '电话',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='日志表';
