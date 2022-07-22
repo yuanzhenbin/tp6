@@ -41,12 +41,13 @@
         {/foreach}
     </table>
 
-    <div style="width: 80%; margin-left: 10%">
+    <div style="width: 100%;">
         <div class="top_row">
             <a style="float: left" href="{:url('User/admin')}" class="orange_button">返回首页</a>
             <span style="float: left" class="blue_button" id="check_btn">验证器</span>
             <span style="float: right" class="blue_button" id="add_btn">添加用户</span>
-            <span style="float: right" class="grey_button">搜索</span>
+            <span style="float: right;" class="grey_button" id="search_btn">搜索</span>
+            <input type="text" id="search" style="float: right; height: 28px; margin-right: 5px;">
         </div>
         <div>
             <table class="layui-hide" id="data_table" lay-filter="data_table"></table>
@@ -56,6 +57,12 @@
     <!-- 添加用户 -->
     <div id="add_user" class="layui-form" style="display: none;">
         <div class="layer_div" style="margin-top: 30px; margin-left: 50px;">
+            <div class="div_line">
+                <div class="div_left">账号：</div>
+                <div class="div_right">
+                    <input type="text" autocomplete="off" id="account" value="">
+                </div>
+            </div>
             <div class="div_line">
                 <div class="div_left">姓名：</div>
                 <div class="div_right">
@@ -92,6 +99,12 @@
     <!-- 修改用户信息 -->
     <div id="edit_user" class="layui-form" style="display: none;">
         <div class="layer_div" style="margin-top: 30px; margin-left: 50px;">
+            <div class="div_line">
+                <div class="div_left">账号：</div>
+                <div class="div_right">
+                    <span id="user_account"></span>
+                </div>
+            </div>
             <div class="div_line">
                 <div class="div_left">姓名：</div>
                 <div class="div_right">
@@ -191,6 +204,7 @@
             }
             ,cols: [[
                 {field:'id', title: 'ID', sort: true, align: 'center'}
+                ,{field:'account', title: '账号', align: 'center'}
                 ,{field:'name', title: '用户名', align: 'center'}
                 ,{field:'phone', title: '电话', align: 'center'}
                 ,{field:'email', title: '邮箱', align: 'center'}
@@ -256,6 +270,7 @@
                         $("#user_email").val(row_data.email);
                         $("#user_sex").val(row_data.sex);
                         $("#user_status").val(row_data.status);
+                        $("#user_account").html(row_data.account);
                     }
                 })
             } else if(obj.event == 'del'){
@@ -298,6 +313,7 @@
                     var email = $("#email").val();
                     var sex = $("#sex").val();
                     var status = $("#status").val();
+                    var account = $("#account").val();
                     $.ajax({
                         url : '{:url("User/addUser")}',
                         data: {
@@ -305,7 +321,8 @@
                             phone:phone,
                             email:email,
                             sex:sex,
-                            status:status
+                            status:status,
+                            account:account,
                         },
                         type:'POST',
                         dataType:'JSON',

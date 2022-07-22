@@ -120,5 +120,16 @@ class RedisTestController extends BaseController
         echo '<br/>';
         var_dump($redis->zrange('z1',0,-1));
         echo '<br/>';
+        echo '<br/>';
+        echo '<br/>';
+
+
+        echo 'cache';
+        echo '<br/>';
+        cache('c1','助手函数');
+        echo cache('c1');
+        echo '<br/>';
+        var_dump(cache('c2'));
+        echo '<br/>';
     }
 }

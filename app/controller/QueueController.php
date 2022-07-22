@@ -10,15 +10,16 @@ use think\facade\View;
 use think\exception\ValidateException;
 use think\facade\Queue;
 
-class QueueTestController extends BaseController
+class QueueController extends BaseController
 {
     public function index()
     {
         $data = Db::name('user')->limit(1,10)->select()->toArray();
         //控制器要写全名
-        $job_class_name = 'app\controller\JobController';
+        $job_class_name = 'app\controller\queue\JobController';
         $job_queue_name = 'jobQueueOne';
 
+        //php think queue:work --queue jobQueueOne
         $ret = Queue::push($job_class_name,['name'=>'test','id'=>1],$job_queue_name);
         if ($ret) {
             echo '推送成功';

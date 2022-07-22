@@ -6,7 +6,9 @@ return [
     // 多语言加载
     // \think\middleware\LoadLangPack::class,
     // Session初始化
-    // \think\middleware\SessionInit::class
+     \think\middleware\SessionInit::class,
     //全局中间件测试
-//     \app\middleware\Check::class
+//     \app\middleware\Check::class,
+    //登录控制
+     \app\middleware\LoginCheck::class,
 ];

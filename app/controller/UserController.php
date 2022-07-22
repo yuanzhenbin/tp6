@@ -12,6 +12,9 @@ use app\service\TestService;
 
 class UserController extends BaseController
 {
+    public $sex_list = [0=>'未知', 1=>'男', 2=>'女'];
+    public $status_list = [0=>'未知', 1=>'正常', 2=>'删除'];
+
     public function index()
     {
         //$this->request->param() 等同于 Request::param() 因为BaseController里已经设置
@@ -23,11 +26,9 @@ class UserController extends BaseController
         $r_method = Request::method();
         if ($r_method == 'GET') {
             $data = Db::name('user')->where([['id','>',0]])->order('create_time desc')->limit($first_row, $limit)->select()->toArray();
-            $sex_list = [0=>'未知', 1=>'男', 2=>'女'];
-            $status_list = [0=>'未知', 1=>'正常', 2=>'删除'];
             foreach ($data as &$v) {
-                $v['sex_show'] = isset($sex_list[$v['sex']])?$sex_list[$v['sex']]:'未知';
-                $v['status_show'] = isset($status_list[$v['status']])?$status_list[$v['status']]:'未知';
+                $v['sex_show'] = isset($this->sex_list[$v['sex']])?$this->sex_list[$v['sex']]:'未知';
+                $v['status_show'] = isset($this->status_list[$v['status']])?$this->status_list[$v['status']]:'未知';
             }
 
             View::assign('data',$data);
@@ -37,11 +38,9 @@ class UserController extends BaseController
             $where[] = ['id','>',0];
             $count = Db::name('user')->where($where)->count();
             $data = Db::name('user')->where($where)->limit($first_row, $limit)->order('id asc')->select()->toArray();
-            $sex_list = [0=>'未知', 1=>'男', 2=>'女'];
-            $status_list = [0=>'未知', 1=>'正常', 2=>'删除'];
             foreach ($data as &$v) {
-                $v['sex_show'] = isset($sex_list[$v['sex']])?$sex_list[$v['sex']]:'未知';
-                $v['status_show'] = isset($status_list[$v['status']])?$status_list[$v['status']]:'未知';
+                $v['sex_show'] = isset($this->sex_list[$v['sex']])?$this->sex_list[$v['sex']]:'未知';
+                $v['status_show'] = isset($this->status_list[$v['status']])?$this->status_list[$v['status']]:'未知';
             }
             return_ajax($data,0,'',$count);
         } else {
@@ -51,7 +50,16 @@ class UserController extends BaseController
 
     public function addUser()
     {
+        $account = request()->param('account');
+        if (!$account) {
+            return_ajax([],0,'账号必填！');
+        }
+        $check = Db::name('user')->where('account',$account)->find();
+        if ($check) {
+            return_ajax([],0,'账号已存在！');
+        }
         $add_data = [];
+        $add_data['account'] = $account;
         $add_data['name'] = request()->param('name','');
         $add_data['phone'] = request()->param('phone','');
         $add_data['email'] = request()->param('email','');
@@ -75,7 +83,7 @@ class UserController extends BaseController
         if ($ret !== false) {
             return_ajax([$ret],200,'添加成功');
         } else {
-            return_ajax([$ret],0,'添加失败');
+            return_ajax([],0,'添加失败');
         }
     }
 
@@ -92,7 +100,7 @@ class UserController extends BaseController
         }
         $ret = Db::name('user')
             ->where('id',$id)
-            ->update(['name' => $name,'phone' => $phone,'email' => $email,'sex' => $sex,'status' => $status]);
+            ->update(['name' => $name,'phone' => $phone,'email' => $email,'sex' => $sex,'status' => $status,'update_time'=>time()]);
 
         if ($ret !== false) {
             return_ajax([],200,'修改成功');
@@ -151,5 +159,62 @@ class UserController extends BaseController
         $id = 1;
         $data = TestService::test($id);
         var_dump($data);
+    }
+
+    //个人中心
+    public function info()
+    {
+        $info = Db::name('user')->field('id,name,sex,status,phone,account,email,create_time,update_time,department_id')->where('account',session('uaccount'))->find();
+
+        $info['sex_show'] = isset($this->sex_list[$info['sex']])?$this->sex_list[$info['sex']]:'未知';
+        $info['status_show'] = isset($this->status_list[$info['status']])?$this->status_list[$info['status']]:'未知';
+
+        View::assign('data',$info);
+        return View::fetch();
+    }
+
+    //从个人中心修改信息
+    public function editInfo()
+    {
+        $id = session('uid');
+        $name = input('name','');
+        $phone = input('phone','');
+        $email = input('email','');
+        $sex = input('sex',0);
+        $password = input('password',1);
+        if(!$id) {
+            return_ajax([],0,'缺少参数');
+        }
+
+        $save_data = [];
+        $save_data['name'] = $name;
+        $save_data['phone'] = $phone;
+        $save_data['email'] = $email;
+        $save_data['sex'] = $sex;
+        $save_data['update_time'] = time();
+        if ($password) {
+            $salt = rand(10000,99999);
+            $password_salt = md5($password.$salt);
+            $save_data['password'] = $password_salt;
+            $save_data['salt'] = $salt;
+        }
+
+        Db::startTrans();
+        try {
+            $ret = Db::name('user')->where('id', $id)->update($save_data);
+
+            if ($ret !== false) {
+                session('uname',$name);
+                Db::commit();
+                echo json_encode(['data'=>[],'code'=>200,'message'=>'保存成功']);
+            } else {
+                Db::rollback();
+                return_ajax([], 0, '保存失败');
+            }
+        } catch (\Throwable $e) {
+            Db::rollback();
+            Db::name('log')->insert(['content'=>$e->getMessage(),'create_time'=>time()]);
+            return_ajax([], 0, '保存失败');
+        }
     }
 }

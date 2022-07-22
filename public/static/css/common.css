@@ -19,6 +19,14 @@
     display: block;
     margin-bottom: 10px;
 }
+.top_row_line{
+    width: 100%;
+    min-height: 32px;
+    display: block;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #cfcfcf;
+}
 .div_line{
     width: 100%;
     margin-bottom: 10px;
@@ -49,6 +57,7 @@
     margin-right: 5px;
 }
 .blue_button:hover{
+    color:#ffffff !important;
     background: #0095ff;
 }
 .orange_button{
@@ -64,6 +73,7 @@
     margin-right: 5px;
 }
 .orange_button:hover{
+    color:#ffffff !important;
     background: #ff9500;
 }
 .grey_button{
@@ -79,6 +89,7 @@
     margin-right: 5px;
 }
 .grey_button:hover{
+    color:#333333 !important;
     background: #f5f5f5;
 }
 
@@ -92,6 +103,13 @@ a:hover{
 }
 body{
     background: #f5f5f5;
+}
+input{
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    padding-left: 5px;
+    height: 20px;
+    line-height: 20px;
 }
 
 

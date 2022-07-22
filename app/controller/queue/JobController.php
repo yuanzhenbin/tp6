@@ -1,5 +1,5 @@
 <?php
-namespace app\controller;
+namespace app\controller\queue;
 
 use app\BaseController;
 use think\cache\driver\Redis;
@@ -20,45 +20,53 @@ class JobController extends BaseController
     public function fire(Job $job, array $data)
     {
         echo '访问成功 ';
-        // 有些任务在到达消费者时，可能已经不再需要执行了
-        $isJobStillNeedToBeDone = $this->checkDatabaseToSeeIfJobNeedToBeDone($data);
-        if (!$isJobStillNeedToBeDone) {
+        //去重
+        $isHas = $this->checkData($data);
+        if ($isHas) {
             $job->delete();
             return;
         }
 
-        $isJobDone = $this->doHelloJob($data);
+        $isJobDone = $this->doJob($data);
         if ($isJobDone) {
             $job->delete();
             echo "删除任务" . $job->attempts() . '\n';
         } else {
             if ($job->attempts() > 3) {
                 $job->delete();
-                echo "超时任务删除" . $job->attempts() . '\n';
+                echo "任务失败次数超过上限，删除" . $job->attempts() . '\n';
             }
         }
     }
 
     /**
-     * 有些消息在到达消费者时,可能已经不再需要执行了，具体业务逻辑自己处理
+     * 任务去重
      * @param array $data
      * @return bool
      */
-    private function checkDatabaseToSeeIfJobNeedToBeDone(array $data)
+    private function checkData(array $data)
     {
-        return true;
+        if (cache($data['account'])) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
-     * 根据消息中的数据进行实际的业务处理...
+     * 业务处理
      * @param array $data
      * @return bool
      */
-    private function doHelloJob(array $data)
+    private function doJob(array $data)
     {
-        Db::name('log')->insert(['content'=>json_encode($data),'create_time'=>time()]);
+        $ret = Db::name('log')->insert(['type'=>1,'content'=>json_encode($data),'create_time'=>time()]);
 
-        return true;
+        if($ret !== false) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
