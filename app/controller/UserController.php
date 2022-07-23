@@ -34,8 +34,12 @@ class UserController extends BaseController
             View::assign('data',$data);
             return View::fetch();
         } else if ($r_method == 'POST') {
+            $search = input('search');
             $where = [];
             $where[] = ['id','>',0];
+            if ($search) {
+                $where[] = ['name|phone','like','%'.$search.'%'];
+            }
             $count = Db::name('user')->where($where)->count();
             $data = Db::name('user')->where($where)->limit($first_row, $limit)->order('id asc')->select()->toArray();
             foreach ($data as &$v) {

@@ -1,3 +1,22 @@
+/*原生标签*/
+a {
+    color: #0085ff;
+}
+a:hover{
+    color: #ff8500;
+}
+body{
+    background: #f5f5f5;
+}
+input{
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    padding-left: 5px;
+    height: 20px;
+    line-height: 20px;
+}
+
+
 /*自定义样式*/
 .content{
     background: #ffffff;
@@ -52,9 +71,10 @@
     border-radius: 2px;
     line-height: 28px;
     text-align: center;
-    min-width: 80px;
+    min-width: 70px;
     cursor: pointer;
     margin-right: 5px;
+    padding: 0 5px;
 }
 .blue_button:hover{
     color:#ffffff !important;
@@ -68,9 +88,10 @@
     border-radius: 2px;
     line-height: 28px;
     text-align: center;
-    min-width: 80px;
+    min-width: 70px;
     cursor: pointer;
     margin-right: 5px;
+    padding: 0 5px;
 }
 .orange_button:hover{
     color:#ffffff !important;
@@ -84,32 +105,14 @@
     border-radius: 2px;
     line-height: 28px;
     text-align: center;
-    min-width: 80px;
+    min-width: 70px;
     cursor: pointer;
     margin-right: 5px;
+    padding: 0 5px;
 }
 .grey_button:hover{
     color:#333333 !important;
     background: #f5f5f5;
-}
-
-
-/*原生标签*/
-a {
-    color: #0085ff;
-}
-a:hover{
-    color: #ff8500;
-}
-body{
-    background: #f5f5f5;
-}
-input{
-    border: 1px solid #cfcfcf;
-    border-radius: 2px;
-    padding-left: 5px;
-    height: 20px;
-    line-height: 20px;
 }
 
 

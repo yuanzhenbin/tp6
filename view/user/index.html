@@ -352,7 +352,24 @@
                 }
             })
         });
-
+        //搜索
+        $("#search_btn").click(function(){
+            var search = $("#search").val();
+            table.reload('data_table', {
+                where: {
+                    search:search,
+                },
+                page: {
+                    curr: 1, //重新从第 1 页开始
+                    limit: 10,//默认每页几条
+                    groups: 10,//连续显示几页
+                    layout: ['count', 'limit', 'prev', 'page', 'next', 'skip'],//分页位置
+                    first: "首页",
+                    last: "尾页",
+                    theme: "#0085ff"
+                }
+            });
+        });
         //验证器测试
         $("#check_btn").click(function(){
             layer.open({
