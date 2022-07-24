@@ -44,7 +44,7 @@ class SeckillController extends BaseController
                 'time'=>date('Y-m-d H:i:s', time()),
                 'sales'=>$sales,
             ];
-            Db::name('log')->insert(['type'=>2,'content'=>json_encode($log_data),'create_time'=>time()]);
+            Db::name('log')->insert(['type'=>2,'content'=>json_encode($log_data),'create_time'=>time(),'title'=>'请求秒杀']);
 
             //php think queue:work --queue seckillQueueOne
             $job_class_name = 'app\controller\queue\Seckill';
@@ -56,7 +56,7 @@ class SeckillController extends BaseController
                 'time'=>date('Y-m-d H:i:s', time()),
                 'sales'=>$sales+1,
             ];
-            $ret = Queue::later($job_class_name,$queue_data,$job_queue_name);
+            $ret = Queue::push($job_class_name,$queue_data,$job_queue_name);
             if (!$ret) {
                 return_ajax([],0,'加入消息队列失败');
             }
@@ -69,8 +69,11 @@ class SeckillController extends BaseController
 
     public function clear()
     {
+//        $redis = New Redis();
         $redis = Cache::store('redis');
-        $redis->del('sales');
+        $redis->handler()->del('sales');
+
+        return_ajax([],200,'清除成功');
     }
 
     //获取存货

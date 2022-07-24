@@ -132,4 +132,12 @@ class RedisTestController extends BaseController
         var_dump(cache('c2'));
         echo '<br/>';
     }
+
+    public function setExpire()
+    {
+        $redis = Cache::store('redis');
+        $redis->setex('kk1',10,'vv1');
+        $redis->setex('kk2',15,'vv2');
+        $redis->setex('kk3',20,'vv3');
+    }
 }
