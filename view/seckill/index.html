@@ -22,14 +22,14 @@
 
     <div>
         <div class="layer_div" style="margin-top: 30px;">
-            <div class="div_line">
+            <div class="div_row">
                 <div class="div_left" style="vertical-align: top;">当前存货：</div>
                 <div class="div_right">
                     {$stock}
                 </div>
             </div>
             <hr>
-            <div class="div_line" style="margin-top: 30px;">
+            <div class="div_row" style="margin-top: 30px;">
                 <div class="div_left"></div>
                 <div class="div_right" style="width: 500px;">
                     <span class="blue_button" id="send_one">单次秒杀</span>
@@ -76,7 +76,7 @@
         });
         $("#send").click(function(){
             //js轮询模拟秒杀
-            setInterval(function () {
+            var send = setInterval(function () {
                 $.ajax({
                     url : '{:url("Seckill/send")}',
                     data: {},
@@ -87,9 +87,9 @@
                             layer.msg(res.message, { icon: 1, time: 1000 });
                             $("#message").val('');
                         } else {
-                            layer.msg(res.message, { icon: 5, time: 1000 });
+                            layer.msg(res.message, { icon: 5, time: 3000 });
+                            clearInterval(send);
                         }
-
                     },
                     error:function () {
                         layer.msg('网络异常', { icon: 5, time: 1000 });
