@@ -1,4 +1,5 @@
 <?php
+namespace alipay\request;
 /**
  * ALIPAY API: alipay.trade.refund request
  *
