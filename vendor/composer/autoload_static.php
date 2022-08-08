@@ -29,6 +29,10 @@ class ComposerStaticInit965ee6f02ad4c3a6835313f1a2a92977
         array (
             'app\\' => 4,
         ),
+        'W' => 
+        array (
+            'Workerman\\' => 10,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
@@ -53,6 +57,10 @@ class ComposerStaticInit965ee6f02ad4c3a6835313f1a2a92977
             'League\\Flysystem\\Cached\\' => 24,
             'League\\Flysystem\\' => 17,
         ),
+        'G' => 
+        array (
+            'GatewayWorker\\' => 14,
+        ),
         'C' => 
         array (
             'Carbon\\' => 7,
@@ -73,12 +81,16 @@ class ComposerStaticInit965ee6f02ad4c3a6835313f1a2a92977
             0 => __DIR__ . '/..' . '/topthink/framework/src/think',
             1 => __DIR__ . '/..' . '/topthink/think-helper/src',
             2 => __DIR__ . '/..' . '/topthink/think-orm/src',
-            3 => __DIR__ . '/..' . '/topthink/think-template/src',
-            4 => __DIR__ . '/..' . '/topthink/think-queue/src',
+            3 => __DIR__ . '/..' . '/topthink/think-queue/src',
+            4 => __DIR__ . '/..' . '/topthink/think-template/src',
         ),
         'app\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
+        ),
+        'Workerman\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/workerman',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -139,6 +151,10 @@ class ComposerStaticInit965ee6f02ad4c3a6835313f1a2a92977
         'League\\Flysystem\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
+        ),
+        'GatewayWorker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/gateway-worker/src',
         ),
         'Carbon\\' => 
         array (
