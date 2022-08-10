@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99dd70506e9ec83b4401f1aba2237d89",
+    "content-hash": "6b6b8752eb09ee8612aaa1a257f8f784",
     "packages": [
         {
             "name": "league/flysystem",
@@ -1520,6 +1520,43 @@
                 }
             ],
             "time": "2021-12-23T13:13:09+00:00"
+        },
+        {
+            "name": "workerman/gatewayclient",
+            "version": "v3.0.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/walkor/GatewayClient.git",
+                "reference": "4362468d68251015b2b385c310252afb4d6648ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/walkor/GatewayClient/zipball/4362468d68251015b2b385c310252afb4d6648ed",
+                "reference": "4362468d68251015b2b385c310252afb4d6648ed",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GatewayClient\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "homepage": "http://www.workerman.net",
+            "support": {
+                "issues": "https://github.com/walkor/GatewayClient/issues",
+                "source": "https://github.com/walkor/GatewayClient/tree/v3.0.14"
+            },
+            "time": "2021-11-29T07:03:50+00:00"
         },
         {
             "name": "workerman/workerman",
