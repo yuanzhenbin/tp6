@@ -44,6 +44,7 @@ class MessageController extends BaseController
             $job_queue_name = 'messageQueueOne';
             $ret = Queue::later(20,$job_class_name,$queue_data,$job_queue_name);
             if ($ret) {
+                data_log(2,'消息队列执行成功','messageQueueOne 入队');
                 return_ajax([],200,'发送成功');
             } else {
                 return_ajax([],0,'发送失败');
@@ -79,9 +80,9 @@ class MessageController extends BaseController
             $job_queue_name = 'messageQueueTwo';
             $redis = Cache::store('redis');
             $ret = $redis->lpush($job_queue_name,json_encode($queue_data));
-
+            //php think myQueue 使用tp6脚本出队
             if ($ret) {
-                data_log(2,'执行成功','myQueue 入队');
+                data_log(2,'自定义消息队列执行成功','messageQueueTwo 入队');
                 return_ajax([],200,'发送成功');
             } else {
                 return_ajax([],0,'发送失败');
@@ -114,7 +115,7 @@ class MessageController extends BaseController
             }
 
             Db::name('message')->where('id',$data['message_id'])->update(['status' => 2, 'send_time' => time()]);
-            data_log(2,'执行成功|'.$check,'myQueue 出队');
+            data_log(2,'自定义消息队列执行成功|'.$check,'messageQueueTwo 出队');
             sleep((int)$wait_time);
         }
 

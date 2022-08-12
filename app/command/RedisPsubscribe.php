@@ -25,6 +25,7 @@ class RedisPsubscribe extends Command
     {
         $redis = new Redis();
         //设置订阅超时时间 默认60s之后断开连接
+        //redis开启监听过期事件 config:notify-keyspace-events "Ex"
         $redis->setOption(\Redis::OPT_READ_TIMEOUT, -1);
         echo "-----过期订阅-----\n";
         $redis->psubscribe(array('__keyevent@0__:expired'), function($redis, $pattern, $chan, $msg) {

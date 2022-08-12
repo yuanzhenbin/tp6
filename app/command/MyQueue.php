@@ -48,7 +48,7 @@ class myQueue extends Command
             sleep((int)$wait_time);
         }
 
-        Db::name('log')->insert(['type'=>2,'content'=>'执行成功','create_time'=>time(),'title'=>'myQueue']);
+        Db::name('log')->insert(['type'=>2,'content'=>'脚本自定义消息队列执行成功','create_time'=>time(),'title'=>'messageQueueTwo 出队']);
 
         // 指令输出
         $output->writeln('执行成功');

@@ -6,19 +6,22 @@ use think\facade\Request;
 use think\facade\Db;
 use app\Model\ModelTest;
 
-class ModelTestController extends BaseController
+class TestModelController extends BaseController
 {
-    public function getInfo()
+    //getinfo
+    public function index()
     {
-        $id = Request::param('id');
-        //test
-        $info1 = ModelTest::where('id','=',$id)->find();
-        $info2 = ModelTest::getOne([['id','=',$id]]);
+        $id = Request::param('id',1);
+        //test 这两个默认返回对象
+        $info1 = ModelTest::where('id','=',$id)->find()->toArray();
+        $info2 = ModelTest::getOne([['id','=',$id]])->toArray();
         //mysql
         $info3 = Db::name('user')->where('id','=',$id)->find();
         if ($info1) {
+            var_dump($info1,"<br>",$info2,"<br>",$info3);
             return_ajax([1=>$info1,2=>$info2,3=>$info3]);
         } else {
+            var_dump([]);
             return_ajax([],0);
         }
     }

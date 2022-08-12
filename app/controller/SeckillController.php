@@ -61,6 +61,7 @@ class SeckillController extends BaseController
                 return_ajax([],0,'加入消息队列失败');
             }
 
+            //加入消息队列成功之后直接返回结果，业务逻辑由seckill处理 可以使用later延时，也可以等到并发低了再调用seckill
             return_ajax([],200,'秒杀成功');
         } else {
             return_ajax([],0,'秒杀失败');

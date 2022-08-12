@@ -6,10 +6,9 @@ use think\cache\driver\Redis;
 use think\facade\Cache;
 use think\facade\Request;
 use think\facade\Db;
-use think\facade\View;
-use think\exception\ValidateException;
 
-class RedisTestController extends BaseController
+
+class TestRedisController extends BaseController
 {
     public function index()
     {
@@ -131,13 +130,5 @@ class RedisTestController extends BaseController
         echo '<br/>';
         var_dump(cache('c2'));
         echo '<br/>';
-    }
-
-    public function setExpire()
-    {
-        $redis = Cache::store('redis');
-        $redis->setex('kk1',10,'vv1');
-        $redis->setex('kk2',15,'vv2');
-        $redis->setex('kk3',20,'vv3');
     }
 }

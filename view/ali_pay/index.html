@@ -98,52 +98,6 @@
             });
             return false;
         });
-        $("#send_my_queue").click(function(){
-            var message = $("#message").val();
-
-            $.ajax({
-                url : '{:url("Message/myQueue")}',
-                data: {
-                    message:message,
-                },
-                type:'POST',
-                dataType:'JSON',
-                success:function (res) {
-                    if(res.code == 200){
-                        layer.msg(res.message, { icon: 1, time: 1000 });
-                        $("#message").val('');
-                    } else {
-                        layer.msg(res.message, { icon: 5, time: 1000 });
-                    }
-
-                },
-                error:function () {
-                    layer.msg('网络异常', { icon: 5, time: 1000 });
-                }
-            });
-            return false;
-        });
-        $("#get_my_queue").click(function(){
-            $.ajax({
-                url : '{:url("Message/getMyQueue")}',
-                data: {},
-                type:'POST',
-                dataType:'JSON',
-                success:function (res) {
-                    if(res.code == 200){
-                        layer.msg(res.message, { icon: 1, time: 1000 });
-                        $("#message").val('');
-                    } else {
-                        layer.msg(res.message, { icon: 5, time: 1000 });
-                    }
-
-                },
-                error:function () {
-                    layer.msg('网络异常', { icon: 5, time: 1000 });
-                }
-            });
-            return false;
-        });
 
         //退出
         $("#logout").click(function(){

@@ -33,8 +33,7 @@
                 <div class="div_left"></div>
                 <div class="div_right" style="width: 500px;">
                     <span class="blue_button" id="send">发布</span>
-                    <!--<span class="blue_button" id="send_my_queue">发送自定义队列</span>-->
-                    <!--<span class="blue_button" id="get_my_queue">获取自定义队列</span>-->
+                    <span class="blue_button" id="setExpire">设置过期订阅事件</span>
                 </div>
             </div>
         </div>
@@ -79,45 +78,18 @@
             });
             return false;
         });
-        $("#send_my_queue").click(function(){
-            var message = $("#message").val();
-
+        $("#setExpire").click(function(){
             $.ajax({
-                url : '{:url("Message/myQueue")}',
-                data: {
-                    message:message,
-                },
-                type:'POST',
-                dataType:'JSON',
-                success:function (res) {
-                    if(res.code == 200){
-                        layer.msg(res.message, { icon: 1, time: 1000 });
-                        $("#message").val('');
-                    } else {
-                        layer.msg(res.message, { icon: 5, time: 1000 });
-                    }
-
-                },
-                error:function () {
-                    layer.msg('网络异常', { icon: 5, time: 1000 });
-                }
-            });
-            return false;
-        });
-        $("#get_my_queue").click(function(){
-            $.ajax({
-                url : '{:url("Message/getMyQueue")}',
+                url : '{:url("RedisPublish/setExpire")}',
                 data: {},
                 type:'POST',
                 dataType:'JSON',
                 success:function (res) {
                     if(res.code == 200){
                         layer.msg(res.message, { icon: 1, time: 1000 });
-                        $("#message").val('');
                     } else {
                         layer.msg(res.message, { icon: 5, time: 1000 });
                     }
-
                 },
                 error:function () {
                     layer.msg('网络异常', { icon: 5, time: 1000 });

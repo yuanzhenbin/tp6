@@ -3,7 +3,7 @@ namespace app\controller;
 
 use app\BaseController;
 
-class MiddleWareTestController extends BaseController
+class TestMiddleWareController extends BaseController
 {
     //控制器中间件
     protected $middleware = [\app\middleware\Check::class,'check2'];

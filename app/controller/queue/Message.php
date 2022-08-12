@@ -73,6 +73,7 @@ class Message extends BaseController
 
         //发送成功修改信息状态
         Db::name('message')->where('id',$data['message_id'])->update(['status' => 2, 'send_time' => time()]);
+        data_log(2,'消息队列执行成功','messageQueueOne 出队');
 
         if($ret !== false) {
             return true;
