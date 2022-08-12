@@ -11,8 +11,8 @@ return [
         'HttpEnd'  => [],
         'LogLevel' => [],
         'LogWrite' => [],
-        'EventTest' => [
-            \app\listener\EventTest::class,
+        'EventListenerTest' => [
+            \app\listener\EventListenerTest::class,
         ],
     ],
 
