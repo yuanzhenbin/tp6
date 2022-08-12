@@ -39,7 +39,6 @@ return [
             'charset'         => env('database.charset', 'utf8'),
             // 数据库表前缀
             'prefix'          => env('database.prefix', ''),
-
             // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
             'deploy'          => 1,
             // 数据库读写是否分离 主从式有效
@@ -76,7 +75,6 @@ return [
             'charset'         => env('database.charset', 'utf8'),
             // 数据库表前缀
             'prefix'          => env('database.prefix', ''),
-
             // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
             'deploy'          => 0,
             // 数据库读写是否分离 主从式有效
