@@ -28,6 +28,7 @@ class SwooleController extends BaseController
         }else{
             $username=$wei[$wei_num].$tou[$tou_num];
         }
+        //根据字符串生成像素头像
         $identicon = new \Identicon\Identicon();
         $imageDataUri = $identicon->getImageDataUri($username);
         $tags = ['A','B','C','D','E'];

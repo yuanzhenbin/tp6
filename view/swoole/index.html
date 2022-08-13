@@ -89,10 +89,6 @@
                     </div>
                     <div style="width: 200px;min-height: 100px;display: inline-block;vertical-align: top;">
                         <button style="margin-top: 10px;" class="blue_button" id="send">发送</button>
-                        <input style="width: 100px; display: block; margin-top: 10px; margin-bottom: 10px;" type="text" name="room_id" id="room_id" value="{$room_id}" onchange="room_change()">
-                        <select name="client_list" id="client_list" style="width: 107px;">
-
-                        </select>
                     </div>
                 </div>
             </div>
@@ -109,130 +105,55 @@
 
 <script src="/static/jquery/jquery-3.6.0.min.js"></script>
 <script src="/static/layui/layui.js"></script>
-<script src="/static/js/web_socket.js"></script>
+<!--<script src="/static/js/web_socket.js"></script>-->
+<script src="/static/js/socket.io-1.4.4.js"></script>
 <script type="text/html" id="operation">
     <a href="javascript:;" lay-event="edit">修改</a>|<a href="javascript:;" lay-event="del">删除</a>
 </script>
 <script>
-    var ws;
-    var client_list = {};
-    var user_list = {};
     var uname = "{:session('uname')}";
     var uid = "{:session('uid')}";
-    var room_id;
-    var client_id;
-    // 连接服务端
-    function connect() {
-        // 创建websocket
-        ws = new WebSocket("ws://127.0.0.1:7272");
-        // 当有消息时根据消息类型显示不同信息
-        ws.onmessage = onmessage;
-        ws.onclose = function() {
-            console.log("连接关闭，定时重连");
-            connect();
-        };
-        ws.onerror = function() {
-            console.log("出现错误");
-        };
-        //每次连接更新room_id
-        room_id = $("#room_id").val();
-    }
-    //代替ws.send 由后端处理业务之后给再推送消息
-    function client_send(type, message='', to_uid='all') {
-        $.ajax({
-            url : '{:url("WorkerMan/send")}',
-            data: {
-                room_id: room_id,
-                to_uid: to_uid,
-                type: type,
-                message: message,
-            },
-            type: 'POST',
-            dataType: 'JSON',
-            success:function (res) {
-            },
-            error:function () {
-                layer.msg('网络异常', { icon: 5, time: 1000 });
-            }
-        });
-    }
-    // 服务端发来消息时
-    function onmessage(e)
-    {
-        console.log(e.data);
-        var data = JSON.parse(e.data);
-        switch(data['type']){
-            //心跳检测
-            case 'ping':
-                ws.send('{"type":"pong"}');
-                break;
-            //建立连接 到后端绑定client_id与uid
-            case 'init':
-                client_id = data.client_id;
-                $.ajax({
-                    url : '{:url("WorkerMan/login")}',
-                    data: {
-                        client_id: client_id,
-                        room_id: room_id
-                    },
-                    type:'POST',
-                    dataType:'JSON',
-                    success:function (res) {
+    // const socket = io('http://192.168.109.30:9502');
+    var wsServer = 'ws://192.168.109.30:9502';
+    var websocket = new WebSocket(wsServer);
+    websocket.onopen = function (evt) {
+        $("#status").html("连接到websocket服务");
+    };
 
-                    },
-                    error:function () {
-                        layer.msg('网络异常', { icon: 5, time: 1000 });
-                    }
-                });
-                break;
-            //登录 更新用户列表
-            case 'login':
-                var client_name = data['uname'];
-                if(data['uid'] == uid) {
-                    client_name = '你';
-                }
-                client_list = data['client_list'];
-                user_list = data['user_list'];
-                say('tip_row',  client_name+' 加入了聊天室');
-                flush_client_list();
-                flush_user_list();
-                break;
-            // 发言
-            case 'say':
-                var type;
-                if (data['from_uid'] == uid) {
-                    type = 'my_row';
-                } else {
-                    type = 'other_row';
-                }
-                say(type, data['content'], data['from_uname'], data['time']);
-                break;
-            // 用户退出 更新用户列表
-            case 'logout':
-                say('tip_row',data['from_uname']+' 退出了聊天室');
-                delete client_list[data['from_uid']];
-                delete user_list[data['uid']];
-                flush_client_list();
-                flush_user_list();
-        }
-    }
-    //刷新在线用户
-    function flush_client_list(){
-        var user_list = $("#user_list");
-        user_list.empty();
-        //$("#user_list").html('');
-        for(var index in client_list){
-            user_list.append('<div class="user_name">'+client_list[index]+'</div>');
-        }
-    }
-    //刷新可以私聊的用户
-    function flush_user_list(){
-        var html = '<option value="all" selected>所有人</option>';
-        for(var index in user_list){
-            html += '<option value="'+index+'">'+user_list[index]+'</option>';
-        }
-        $("#client_list").html(html);
-    }
+    websocket.onopen = function (evt) {
+        console.log('open',evt);
+        say('tip_row', '连接到websocket服务');
+    };
+
+    websocket.onclose = function (evt) {
+        console.log('close',evt);
+        say('tip_row', '断开连接');
+    };
+
+    websocket.onmessage = function (evt) {
+        console.log('message',evt);
+        say('other_row', evt.data);
+    };
+
+    websocket.onerror = function (evt, e) {
+        console.log('Error occured: ' + evt.data);
+    };
+
+    // // 初始化
+    // socket.on('connectcallback', function(res){
+    //     say('tip_row', res.msg);
+    // });
+    //
+    // // 发送消息
+    // socket.on("sendmsgcallback", function (res) {
+    //     say('other_row', res.msg, res.name);
+    // });
+    //
+    // // 关闭聊天室
+    // socket.on('closecallback',function(res){
+    //     say('tip_row', res.msg);
+    // });
+
     //发言后在页面添加数据
     function say(type, content, name = '',time = '') {
         if (type == 'tip_row'){
@@ -242,24 +163,6 @@
         }
 
         $("#message_box").append(html);
-    }
-
-    connect();
-
-    function room_change(){
-        var room_id = $('#room_id').val();
-        var href = "{:url('WorkerMan/index')}?room_id="+room_id;
-        //模拟a链接
-        var a = document.createElement('a');
-        a.setAttribute('href', href);
-        // a.setAttribute('target', '_blank');
-        a.setAttribute('id', 'js_a');
-        //防止反复添加
-        if(document.getElementById('js_a')) {
-            document.body.removeChild(document.getElementById('js_a'));
-        }
-        document.body.appendChild(a);
-        a.click();
     }
 
     layui.use(['form', 'laydate', 'table', 'layer'], function(){
@@ -275,8 +178,10 @@
                 return false;
             }
             $("#message").val('');
-            var target = $("#client_list").val();
-            client_send('say', message, target);
+            // user.msg = message;
+            say('my_row', message, uname);
+            websocket.send(message);
+            // socket.emit("sendmsg", user);
         });
 
         //退出

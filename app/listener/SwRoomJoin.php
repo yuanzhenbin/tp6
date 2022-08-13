@@ -24,6 +24,6 @@ class SwRoomJoin
     public function handle($event)
     {
         $this->websocket->join($event['room']);
-        $this->websocket->to($event['room'])->emit("joincallback", ['msg' => '欢迎客户端编号:'.$this->websocket->getSender().'加入到房间。','client_id' => $this->websocket->getSender()]);
+        $this->websocket->to($event['room'])->emit("join", ['msg' => '欢迎客户端编号:'.$this->websocket->getSender().'加入到房间。','client_id' => $this->websocket->getSender()]);
     }
 }

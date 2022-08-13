@@ -24,9 +24,10 @@ class SwWsConnect
      */
     public function handle($event)
     {
+        var_dump($event);
         $data = [
             'msg' => "有人悄悄上线了..."
         ];
-        $this->websocket->broadcast()->emit('connectcallback',$data);
+        $this->websocket->broadcast()->emit('connect',$data);
     }
 }

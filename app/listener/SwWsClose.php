@@ -21,6 +21,6 @@ class SwWsClose
      */
     public function handle($event)
     {
-        $this->websocket->broadcast()->emit("closecallback", ['msg' => "有人偷偷离开了..."]);
+        $this->websocket->broadcast()->emit("close", ['msg' => "有人偷偷离开了..."]);
     }
 }

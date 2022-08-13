@@ -24,6 +24,6 @@ class SwWsMessage
      */
     public function handle($event)
     {
-        $this->websocket->broadcast()->emit("sendmsgcallback", $event);
+        $this->websocket->broadcast()->emit("message", $event);
     }
 }

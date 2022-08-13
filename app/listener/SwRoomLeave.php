@@ -21,7 +21,7 @@ class SwRoomLeave
      */
     public function handle($event)
     {
-        $this->websocket->to($event['room'])->emit("leavecallback", ['msg' => '客户端编号:'.$this->websocket->getSender().'离开了房间。']);
+        $this->websocket->to($event['room'])->emit("leave", ['msg' => '客户端编号:'.$this->websocket->getSender().'离开了房间。']);
         $this->websocket->leave($event['room']);
     }
 }
