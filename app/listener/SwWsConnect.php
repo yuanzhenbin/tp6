@@ -3,17 +3,30 @@ declare (strict_types = 1);
 
 namespace app\listener;
 
+use think\Container;
+use think\swoole\Websocket;
+use think\swoole\websocket\Room;
+
 class SwWsConnect
 {
+    public $websocket = null;
+
+    public function __construct(Container $container)
+    {
+        $this->websocket = $container->make(Websocket::class);
+        $this->room = $container->make(Room::class);
+    }
     /**
      * 事件监听处理
      *
      * @return mixed
+     * 受用 WebSocket 客户端连接入口
      */
-    public function handle($event, \think\swoole\websocket $ws)
+    public function handle($event)
     {
-        // 获取当前发送者的fd
-        $fd = $ws->getSender();
-        echo "fd{$fd} 连接成功<br>";
+        $data = [
+            'msg' => "有人悄悄上线了..."
+        ];
+        $this->websocket->broadcast()->emit('connectcallback',$data);
     }
 }

@@ -3,18 +3,27 @@ declare (strict_types = 1);
 
 namespace app\listener;
 
+use think\Container;
+use think\swoole\Websocket;
+use think\swoole\websocket\Room;
+
 class SwWsMessage
 {
+    public $websocket = null;
+
+    public function __construct(Container $container)
+    {
+        $this->websocket = $container->make(Websocket::class);
+        $this->room = $container->make(Room::class);
+    }
+
     /**
      * 事件监听处理
      *
      * @return mixed
      */
-    public function handle($event, \think\swoole\websocket $ws)
+    public function handle($event)
     {
-        $fd = $ws->getSender();
-        $data = json_encode($event);
-        echo "{$fd}:{$data}<br>";
-        $ws->emit("this is server", $fd);
+        $this->websocket->broadcast()->emit("sendmsgcallback", $event);
     }
 }
