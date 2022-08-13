@@ -24,7 +24,7 @@ return [
         ],
     ],
     'websocket'  => [
-        'enable'        => false,
+        'enable'        => true,
         'handler'       => Handler::class,
         'ping_interval' => 25000,
         'ping_timeout'  => 60000,
@@ -43,7 +43,11 @@ return [
                 'max_wait_time' => 5,
             ],
         ],
-        'listen'        => [],
+        'listen'        => [
+            'connect' => \app\listener\SwWsConnect::class,
+            'close' => \app\listener\SwWsClose::class,
+            'message' => \app\listener\SwWsMessage::class,
+        ],
         'subscribe'     => [],
     ],
     'rpc'        => [
