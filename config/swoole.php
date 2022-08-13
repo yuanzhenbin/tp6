@@ -1,11 +1,12 @@
 <?php
 
 use think\swoole\websocket\socketio\Handler;
+use think\swoole\websocket\socketio\Parser;
 
 return [
     'server'     => [
-        'host'      => env('SWOOLE_HOST', '127.0.0.1'), // 监听地址
-        'port'      => env('SWOOLE_PORT', 8080), // 监听端口
+        'host'      => env('SWOOLE_HOST', '0.0.0.0'), // 监听地址
+        'port'      => env('SWOOLE_PORT', 9502), // 监听端口
         'mode'      => SWOOLE_PROCESS, // 运行模式 默认为SWOOLE_PROCESS
         'sock_type' => SWOOLE_SOCK_TCP, // sock type 默认为SWOOLE_SOCK_TCP
         'options'   => [
@@ -26,6 +27,7 @@ return [
     'websocket'  => [
         'enable'        => true,
         'handler'       => Handler::class,
+        'parser'        => Parser::class,
         'ping_interval' => 25000,
         'ping_timeout'  => 60000,
         'room'          => [
@@ -47,6 +49,8 @@ return [
             'connect' => \app\listener\SwWsConnect::class,
             'close' => \app\listener\SwWsClose::class,
             'message' => \app\listener\SwWsMessage::class,
+            'join' => \app\listener\SwRoomJoin::class,
+            'leave' => \app\listener\SwRoomLeave::class,
         ],
         'subscribe'     => [],
     ],

@@ -8,5 +8,6 @@ return [
         'myQueue' => \app\command\MyQueue::class,
         'redisSub' => \app\command\RedisSubscribe::class,
         'redisPsub' => \app\command\RedisPsubscribe::class,
+        'swooleTimer' => \app\command\SwooleTimer::class,
     ],
 ];

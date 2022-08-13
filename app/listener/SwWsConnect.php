@@ -14,6 +14,6 @@ class SwWsConnect
     {
         // 获取当前发送者的fd
         $fd = $ws->getSender();
-        echo "server: handshake success with fd{$fd}\n";
+        echo "fd{$fd} 连接成功<br>";
     }
 }

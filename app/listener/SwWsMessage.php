@@ -14,7 +14,7 @@ class SwWsMessage
     {
         $fd = $ws->getSender();
         $data = json_encode($event);
-        echo "receive from {$fd}:{$data}\n";
+        echo "{$fd}:{$data}<br>";
         $ws->emit("this is server", $fd);
     }
 }

@@ -13,6 +13,6 @@ class SwWsClose
     public function handle($event, \think\swoole\websocket $ws)
     {
         $fd = $ws->getSender();
-        echo "client {$fd} closed\n";
+        echo "client {$fd} 断开连接<br>";
     }
 }
