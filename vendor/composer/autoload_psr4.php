@@ -30,6 +30,7 @@ return array(
     'League\\MimeTypeDetection\\' => array($vendorDir . '/league/mime-type-detection/src'),
     'League\\Flysystem\\Cached\\' => array($vendorDir . '/league/flysystem-cached-adapter/src'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
+    'Identicon\\' => array($vendorDir . '/yzalis/identicon/src/Identicon'),
     'GatewayWorker\\' => array($vendorDir . '/workerman/gateway-worker/src'),
     'GatewayClient\\' => array($vendorDir . '/workerman/gatewayclient'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),

@@ -63,6 +63,10 @@ class ComposerStaticInit965ee6f02ad4c3a6835313f1a2a92977
             'League\\Flysystem\\Cached\\' => 24,
             'League\\Flysystem\\' => 17,
         ),
+        'I' => 
+        array (
+            'Identicon\\' => 10,
+        ),
         'G' => 
         array (
             'GatewayWorker\\' => 14,
@@ -174,6 +178,10 @@ class ComposerStaticInit965ee6f02ad4c3a6835313f1a2a92977
         'League\\Flysystem\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
+        ),
+        'Identicon\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yzalis/identicon/src/Identicon',
         ),
         'GatewayWorker\\' => 
         array (
