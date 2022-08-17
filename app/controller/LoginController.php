@@ -27,6 +27,9 @@ class LoginController extends BaseController
 
         $uinfo = Db::name('user')->where('account',$account)->find();
 //        var_dump(md5($password),$uinfo['password']);die;
+        if(!$uinfo) {
+            return_ajax([],0,'账号或密码错误！');
+        }
 
         if ((!$uinfo['password'] && !$password) || ($uinfo['password'] == md5($password.$uinfo['salt']))) {
             session('uid',$uinfo['id']);
