@@ -31,7 +31,8 @@ class LoginController extends BaseController
             return_ajax([],0,'账号或密码错误！');
         }
 
-        if ((!$uinfo['password'] && !$password) || ($uinfo['password'] == md5($password.$uinfo['salt']))) {
+        //hash_equals防时序攻击
+        if ((!$uinfo['password'] && !$password) || hash_equals($uinfo['password'],md5($password.$uinfo['salt']))) {
             session('uid',$uinfo['id']);
             session('uname',$uinfo['name']);
             session('uaccount',$uinfo['account']);
