@@ -9,7 +9,7 @@ class User extends Model
     protected $schema = [
         'id'  => 'int',
         'name' => 'string',
-        'phone'  => 'int',
+        'phone'  => 'string',
         'email' => 'string',
         'status' => 'tinyint',
         'sex' => 'tinyint',
@@ -20,4 +20,25 @@ class User extends Model
         'password' => 'string',
         'salt' => 'string',
     ];
+
+    //添加用户
+    public function addUser($data)
+    {
+        $add_data = [];
+        $add_data['account'] = $data['account'];
+        $add_data['name'] = $data['name']?$data['name']:$data['account'];
+        $add_data['phone'] = $data['phone'];
+        $add_data['email'] = $data['email'];
+        $add_data['sex'] = $data['sex'];
+        $add_data['status'] = $data['status'];
+        $add_data['create_time'] = time();
+        if ($data['password']) {
+            $salt = rand(10000,99999);
+            $password_salt = md5($data['password'].$salt);
+            $add_data['password'] = $password_salt;
+            $add_data['salt'] = $salt;
+        }
+
+        return $this->save($add_data);
+    }
 }

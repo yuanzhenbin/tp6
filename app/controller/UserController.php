@@ -55,6 +55,9 @@ class UserController extends BaseController
     public function addUser()
     {
         $account = request()->param('account');
+        $password = request()->param('password');
+        $phone = input('phone','');
+        $email = input('email','');
         if (!$account) {
             return_ajax([],0,'账号必填！');
         }
@@ -62,14 +65,26 @@ class UserController extends BaseController
         if ($check) {
             return_ajax([],0,'账号已存在！');
         }
+        if ($phone && !is_mobile($phone)) {
+            return_ajax([], 0, '电话号码不正确');
+        }
+        if ($email && !is_email($email)) {
+            return_ajax([], 0, '邮箱不正确');
+        }
         $add_data = [];
         $add_data['account'] = $account;
-        $add_data['name'] = request()->param('name','');
-        $add_data['phone'] = request()->param('phone','');
-        $add_data['email'] = request()->param('email','');
+        $add_data['name'] = request()->param('name',$account);
+        $add_data['phone'] = $phone;
+        $add_data['email'] = $email;
         $add_data['sex'] = Request::param('sex',0);
         $add_data['status'] = Request::param('status',1);
         $add_data['create_time'] = time();
+        if ($password) {
+            $salt = rand(10000,99999);
+            $password_salt = md5($password.$salt);
+            $add_data['password'] = $password_salt;
+            $add_data['salt'] = $salt;
+        }
 
         //都不返回id 返回行数
 //        $ret = Db::name('user')->save($add_data);

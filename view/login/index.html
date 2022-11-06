@@ -30,15 +30,24 @@
                     </div>
                 </div>
                 <div class="div_row">
+                    <div class="div_left">验证码：</div>
+                    <div class="div_right">
+                        <input type="text" autocomplete="off" id="verification" value="">
+                    </div>
+                </div>
+                <div class="div_row">
                     <div class="div_left"></div>
                     <div class="div_right">
-                        <span class="grey_button" id="register">注册</span>
+                        <a class="grey_button" href="{:url('Login/registerView')}">注册</a>
                         <span class="blue_button" id="login">登录</span>
                     </div>
                 </div>
             </div>
             <div style="width: 25%; height: 90px; vertical-align: top; display: inline-block; position: relative;">
-                <img src="/photo/snowflake.ico" alt="" width="120" height="120" style="position: absolute; top: -15px; left: -10px">
+                <img src="/photo/snowflake.ico" alt="" width="20" height="20" style="position: absolute; top: 0; left: 105px">
+                <div style="display: inline-block" id="verificationCode" onclick="change_code()">
+                    <img src="{:url('Login/verificationCode')}" width="120" height="70" style="position: absolute; top: 20px; left: -10px; border: 1px double #0085ff; cursor: pointer;">
+                </div>
             </div>
         </div>
     </div>
@@ -57,12 +66,14 @@
         $("#login").click(function(){
             var account = $("#account").val();
             var password = $("#password").val();
+            var verification = $("#verification").val();
 
             $.ajax({
                 url : '{:url("Login/login")}',
                 data: {
                     account:account,
                     password:password,
+                    verification:verification,
                 },
                 type:'POST',
                 dataType:'JSON',
@@ -80,11 +91,15 @@
                 }
             });
         });
-        //注册
-        $("#register").click(function(){
-            window.location.reload();
-        });
     });
+
+    function change_code() {
+        var url = "{:url('Login/verificationCode')}"+"?";
+        //请求路径相同的话html不重新加载
+        var html = `<img src="`+url+new Date().getTime()+`" width="120" height="70" style="position: absolute; top: 20px; left: -10px; border: 1px double #0085ff; cursor: pointer;">`;
+        console.log(html);
+        $('#verificationCode').html(html);
+    }
 </script>
 
 

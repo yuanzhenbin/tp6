@@ -30,3 +30,15 @@ function data_log(int $type, string $content, string $title = "", int $create_ti
         'create_time' => $create_time?:time()
     ]);
 }
+
+//判断11位电话号码
+function is_mobile($mobile)
+{
+    return preg_match("/^1[3-9]\d{9}$/", $mobile) ? TRUE : FALSE;
+}
+
+//判断邮箱
+function is_email($email)
+{
+    return preg_match("/^[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*@([a-zA-Z0-9]+[-.])+([a-z]{2,5})$/ims", $email) ?  TRUE : FALSE;
+}
