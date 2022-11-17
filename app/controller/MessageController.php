@@ -42,7 +42,8 @@ class MessageController extends BaseController
             //php think queue:work --queue messageQueueOne
             $job_class_name = 'app\controller\queue\Message';
             $job_queue_name = 'messageQueueOne';
-            $ret = Queue::later(20,$job_class_name,$queue_data,$job_queue_name);
+//            $ret = Queue::later(10,$job_class_name,$queue_data,$job_queue_name);//延迟10s
+            $ret = Queue::push($job_class_name,$queue_data,$job_queue_name);//无延迟
             if ($ret) {
                 data_log(2,'消息队列执行成功','messageQueueOne 入队');
                 return_ajax([],200,'发送成功');

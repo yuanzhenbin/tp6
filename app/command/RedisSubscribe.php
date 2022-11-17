@@ -12,7 +12,7 @@ use think\console\Output;
 use think\facade\Db;
 use think\facade\Cache;
 
-class redisSubscribe extends Command
+class RedisSubscribe extends Command
 {
     protected function configure()
     {
