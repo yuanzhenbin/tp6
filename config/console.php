@@ -9,5 +9,6 @@ return [
         'redisSub' => \app\command\RedisSubscribe::class,
         'redisPsub' => \app\command\RedisPsubscribe::class,
         'swooleTimer' => \app\command\SwooleTimer::class,
+        'rabbitmq' => \app\command\RabbitMq::class,
     ],
 ];
